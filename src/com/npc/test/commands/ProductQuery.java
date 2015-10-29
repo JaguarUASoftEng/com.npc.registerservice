@@ -19,6 +19,7 @@ public class ProductQuery implements ResultCommandInterface<Product> {
 	public UUID getProductId() {
 		return this.productId;
 	}
+	
 	public ProductQuery setProductId(UUID productId) {
 		this.productId = productId;
 		return this;
