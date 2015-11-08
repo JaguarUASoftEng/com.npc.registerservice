@@ -33,16 +33,43 @@ public class ProductResource {
 	@Path("apiv0/product/{productid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Product getProduct(@PathParam("productid") UUID productId) {
+	
+		System.out.println("hello to console");
+		
 		return (new ProductQuery()).
-			setProductId(productId).
-			setProductRepository(new ProductRepository()).
-			execute();
+				setProductId(productId).
+				setProductRepository(new ProductRepository()).
+				execute();
 	}
 	
 	@GET
 	@Path("apiv0/product/getByLookUpCode/{lookupcode}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Product getProductByLookUpCode(@PathParam("lookupcode") String lookUpCode){
+		Product test = (new ProductQuery()).
+				setLookUpCode(lookUpCode).
+				setProductRepository(new ProductRepository()).
+				execute();
+		
+		try{
+			System.out.println("This is the Id "+ test.getLookupCode());
+			System.out.println("This is the UUID "+ test.getId());
+		}catch(Exception e){
+			System.out.println("this thing maybe null");
+		}
+		
+		if(test.getLookupCode() == null)
+		{
+			System.out.println("Definitely null");
+		}
+		
+		return test;
+	}
+	
+	@GET
+	@Path("apiv0/DummyData/Html")
+	@Produces(MediaType.TEXT_HTML)
+	public String DummyDataToHtml(){
 		Product dummyData = new Product();
 		
 		dummyData.setDescription("Dummy Data Description");
@@ -58,8 +85,18 @@ public class ProductResource {
 		dummyData.setMSRP(7);
 		dummyData.setApiRequestMessage("Api Request Message of Dummy Data");
 		
-		return dummyData;
+		return "<b>Description: </b>"+dummyData.getDescription()+"<br><b>LookUpCode: </b>"+dummyData.getLookupCode()+"<br>";
 	}
+	
+	/*
+	@GET
+	@Path("apiv0/Product/DatabaseAccess/ByLookUpCode/{lookupcode}")
+	@Produces(MediaType.TEXT_HTML)
+	public String DabaseAccess(){
+		Product
+		
+		return "";
+	}*/
 	
 	@PUT
 	@Path("apiv0")
