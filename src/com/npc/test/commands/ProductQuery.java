@@ -10,7 +10,7 @@ public class ProductQuery implements ResultCommandInterface<Product> {
 	@Override
 	public Product execute(){
 		return new Product(
-				this.productRepository.get(this.productId)
+				this.productRepository.byLookupCode(this.lookUpCode)
 				);
 	}
 	
