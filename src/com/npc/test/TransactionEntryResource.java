@@ -1,5 +1,6 @@
 package com.npc.test;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -18,6 +19,14 @@ import org.npc.testmodel.repositories.TransactionEntryRepository;
 import com.npc.test.commands.CreateTransactionEntryCommand;
 import com.npc.test.commands.TransactionEntriesQuery;
 import com.npc.test.commands.TransactionEntryQuery;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.npc.testmodel.api.Product;
+
 
 @Path("/")
 public class TransactionEntryResource {
@@ -40,24 +49,55 @@ public class TransactionEntryResource {
 			execute();
 	}
 	
+	@GET
+	@Path("apiv0/sendsomething")
+	public void dosomething() throws IOException
+	{
+		System.out.println("did something");
+		 
+		
+		Product dummyData = new Product();
+		
+		dummyData.setDescription("Dummy Data Description");
+		dummyData.setLookupCode("DummyLookUpCode");
+		dummyData.setPrice(1);
+		dummyData.setItemType(2);
+		dummyData.setCost(3);
+		dummyData.setQuantity(4);
+		dummyData.setReorderPoint(5);
+		dummyData.setRestockLevel(6);
+		dummyData.setExtendedDescription("Extended Description of Dummy Data");
+		dummyData.setActive(1);
+		dummyData.setMSRP(7);
+		dummyData.setApiRequestMessage("Api Request Message of Dummy Data");
+		
+		String temp = "{"+
+						"id "
+						+"}";
+		
+		URL url = new URL("http://localhost:8080/registerservice/apiv0/transactionEntry");
+		HttpURLConnection httpcon = (HttpURLConnection) url.openConnection();
+		httpcon.setDoOutput(true);
+		httpcon.setRequestMethod("PUT");
+		OutputStreamWriter out = new OutputStreamWriter(
+				httpcon.getOutputStream());
+		out.write(" ");
+		out.close();
+		httpcon.getInputStream();
+	}
+	
 	@PUT
 	@Path("apiv0/transactionEntry")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public TransactionEntry createTransactionEntry(JAXBElement<TransactionEntry> apiTransactionEntry) {
-		return (new CreateTransactionEntryCommand()).
-			setApiTransactionEntry(apiTransactionEntry.getValue()).
-			setTransactionEntryRepository(new TransactionEntryRepository()).
-			execute();
-	}
-	
-	
-	@GET
-	@Path("hello")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String hello()
-	{
-		return "Hello From the Server";
+	public void createTransactionEntry(ArrayList<Product> apiTransactionEntry) {
+		
+		for(int productNumber = 0; productNumber < apiTransactionEntry.size(); productNumber++)
+		{
+			CreateTransactionEntryCommand writeInstance = new CreateTransactionEntryCommand();
+			writeInstance.setApiTransactionEntry(apiTransactionEntry)
+		}
+		
 	}
 	
 }

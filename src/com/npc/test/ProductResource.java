@@ -33,9 +33,6 @@ public class ProductResource {
 	@Path("apiv0/product/{productid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Product getProduct(@PathParam("productid") UUID productId) {
-	
-		System.out.println("hello to console");
-		
 		return (new ProductQuery()).
 				setProductId(productId).
 				setProductRepository(new ProductRepository()).

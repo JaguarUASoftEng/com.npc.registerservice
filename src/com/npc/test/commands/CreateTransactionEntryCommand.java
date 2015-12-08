@@ -32,6 +32,7 @@ public class CreateTransactionEntryCommand implements ResultCommandInterface<Tra
 	public TransactionEntry getApiTransactionEntry() {
 		return this.apiTransactionEntry;
 	}
+	
 	public CreateTransactionEntryCommand setApiTransactionEntry(TransactionEntry apiTransactionEntry) {
 		this.apiTransactionEntry = apiTransactionEntry;
 		return this;
@@ -41,6 +42,7 @@ public class CreateTransactionEntryCommand implements ResultCommandInterface<Tra
 	public TransactionEntryRepositoryInterface getTransactionEntryRepository() {
 		return this.transactionEntryRepository;
 	}
+	
 	public CreateTransactionEntryCommand setTransactionEntryRepository(TransactionEntryRepositoryInterface transactionEntryRepository) {
 		this.transactionEntryRepository = transactionEntryRepository;
 		return this;
