@@ -92,11 +92,21 @@ public class TransactionEntryResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public void createTransactionEntry(ArrayList<Product> apiTransactionEntry) {
 		
+		double transactionEntryTotal = 0;
+		
 		for(int productNumber = 0; productNumber < apiTransactionEntry.size(); productNumber++)
 		{
 			CreateTransactionEntryCommand writeInstance = new CreateTransactionEntryCommand();
-			writeInstance.setApiTransactionEntry(apiTransactionEntry)
+			
+			writeInstance.setApiTransactionEntry(new TransactionEntry().setPrice(apiTransactionEntry.get(productNumber).getPrice())
+					.setProductID(apiTransactionEntry.get(productNumber).getId())
+					.setQuantity(apiTransactionEntry.get(productNumber).getQuantity()));
+			
+			
+			transactionEntryTotal = apiTransactionEntry.get(productNumber).getPrice() * apiTransactionEntry.get(productNumber).getQuantity();
 		}
+		
+		
 		
 	}
 	
