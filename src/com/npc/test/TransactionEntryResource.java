@@ -14,8 +14,10 @@ import javax.xml.bind.JAXBElement;
 
 import org.npc.testmodel.api.TransactionEntry;
 import org.npc.testmodel.api.TransactionEntryListing;
+import org.npc.testmodel.api.Transaction;
 import org.npc.testmodel.repositories.TransactionEntryRepository;
 
+import com.npc.test.commands.CreateTransactionCommand;
 import com.npc.test.commands.CreateTransactionEntryCommand;
 import com.npc.test.commands.TransactionEntriesQuery;
 import com.npc.test.commands.TransactionEntryQuery;
@@ -100,13 +102,20 @@ public class TransactionEntryResource {
 			
 			writeInstance.setApiTransactionEntry(new TransactionEntry().setPrice(apiTransactionEntry.get(productNumber).getPrice())
 					.setProductID(apiTransactionEntry.get(productNumber).getId())
-					.setQuantity(apiTransactionEntry.get(productNumber).getQuantity()));
+					.setQuantity(apiTransactionEntry.get(productNumber).getQuantity())
+					.setRecordID(productNumber)
+					.setTransactionID(productNumber)).execute();
 			
 			
-			transactionEntryTotal = apiTransactionEntry.get(productNumber).getPrice() * apiTransactionEntry.get(productNumber).getQuantity();
+			transactionEntryTotal = transactionEntryTotal + (apiTransactionEntry.get(productNumber).getPrice() * apiTransactionEntry.get(productNumber).getQuantity());
+		
 		}
 		
-		
+		CreateTransactionCommand TransactionInstance = new CreateTransactionCommand();	
+		TransactionInstance.setApiTransaction(new Transaction()
+			.setAmount((int)transactionEntryTotal)
+			.setTransactionType("new transaction")
+			.setR_ID(UUID.randomUUID()));
 		
 	}
 	
